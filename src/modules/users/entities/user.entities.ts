@@ -9,7 +9,7 @@ export class User {
     isAdmin: boolean;
 
     private constructor( name: string, username: string, password: string){
-        this.id = randomUUID()
+        this.id = randomUUID();
         this.name = name;
         this.username = username;
         this.password = password;
@@ -18,6 +18,6 @@ export class User {
 
     static create({name, password, username}:UserRequest ) {
         const user = new User(name, username, password);
-        return user
+        return user;
     }
 }

@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { CreateUserController } from "../useCases/create-user.ts/create-user.controller";
+import { createUserController } from "../modules/users/useCases/create-user.ts";
 
 const useRouter = Router();
 
-const userCreateController = new CreateUserController()
-
-useRouter.post("/users",userCreateController.handle )
+useRouter.post("/users",createUserController.handle )
 
 export {useRouter}

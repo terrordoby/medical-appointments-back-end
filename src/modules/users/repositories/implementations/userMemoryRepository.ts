@@ -1,4 +1,4 @@
-import { User } from "../entities/user.entities";
+import { User } from "../../entities/user.entities";
 
 export class UserRepository {
     users: User[]

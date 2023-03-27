@@ -1,16 +1,20 @@
 import {Request, Response} from 'express'
+import { logger } from '../../../../utils/logger';
+import { IUserRepository } from '../../repositories/Iuser.repository';
 import { CreateUserCase } from './create-user.usercase'
-import { logger } from '../../utils/logger';
 
 export class CreateUserController {
-    
+
+  constructor(private userRepository: IUserRepository){}
+
   async handle(request: Request, response: Response) {
     logger.info("Usuário sendo criado")
     try {
       const data = request.body;
-      const user = await new CreateUserCase().execute(data);
+      const useCase = new CreateUserCase(this.userRepository)
+      const result = useCase.execute(data)
 
-    return response.json(user)
+    return response.json(result)
     } catch (err: any) {
         logger.error(err.stack)
         return response.status(400).json(err.message)
