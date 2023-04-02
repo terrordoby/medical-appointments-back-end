@@ -15,7 +15,7 @@ class Specialist {
         this.id = randomUUID();
         this.name = name;
         this.description = description;
-        this.createdAt = new Date()
+        this.createdAt = new Date();
     }
 
     static create({name, description}: ISpecialist) {

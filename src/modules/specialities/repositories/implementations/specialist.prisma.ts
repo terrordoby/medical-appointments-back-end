@@ -3,6 +3,13 @@ import { Specialist } from "../../entity/specialist.entity";
 import { ISpecialistRepository } from "../specialist.repository";
 
 export class RepositorySpecialistPrisma implements ISpecialistRepository {
+   async  findByName(name: string): Promise<Specialist | null> {
+        return await prismaClient.specialist.findUnique({
+            where: {
+                name
+            }
+        })
+    }
     async save(data: Specialist): Promise<Specialist> {
         const specialist =  await prismaClient.specialist.create({
             data: {
@@ -14,6 +21,13 @@ export class RepositorySpecialistPrisma implements ISpecialistRepository {
         })
 
         return specialist
+    }
 
+    async finById(specialistyId: string): Promise<Specialist | null> {
+        return prismaClient.specialist.findUnique({
+            where: {
+                id: specialistyId
+            }
+        })
     }
 }

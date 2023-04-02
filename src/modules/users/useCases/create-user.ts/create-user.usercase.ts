@@ -3,6 +3,7 @@ import { User } from "../../entities/user.entities";
 import { IUserRepository } from "../../repositories/Iuser.repository";
 import { UserRepository } from "../../repositories/implementations/userMemoryRepository";
 import { IPasswordCrypto } from "../../../../infra/shared/crypto/password.crypto";
+import { IToken } from "../../../../infra/shared/token/token";
 
 export interface UserRequest {
     name: string;
@@ -12,7 +13,7 @@ export interface UserRequest {
 
  export class CreateUserCase {
 
-    constructor(private userRepository: IUserRepository, private passwordCrypto: IPasswordCrypto) {}
+    constructor(private userRepository: IUserRepository) {}
 
     async execute(data : UserRequest) {
 
@@ -20,18 +21,15 @@ export interface UserRequest {
             throw new ParameterRequired("Username/Password is required")
         }
 
-        const existUser = await this.userRepository.findUsername(data.name);
+        const existUser = await this.userRepository.findUsername(data.username);
 
         if(existUser) {
             throw new ParameterRequired("Username is already")
         }
 
-        const user = User.create(data);
+        const user = await User.create(data);
 
-        const userCreated = await this.userRepository.save({
-            ...user,
-            password: await this.passwordCrypto.hash(user.password) as string
-        });
+        const userCreated = await this.userRepository.save(user)
 
         return userCreated;
 

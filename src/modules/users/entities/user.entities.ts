@@ -1,5 +1,6 @@
 import {randomUUID} from 'crypto';
 import { UserRequest } from '../useCases/create-user.ts/create-user.usercase';
+import { PasswordBcrypt } from '../../../infra/shared/crypto/password.bcrypt';
 
 export class User {
     id: string;
@@ -9,6 +10,11 @@ export class User {
     isAdmin: boolean;
 
     private constructor( name: string, username: string, password: string){
+
+        if(!username || !password) {
+            throw new Error("Username/ Password is required")
+        }
+        
         this.id = randomUUID();
         this.name = name;
         this.username = username;
@@ -16,8 +22,13 @@ export class User {
         this.isAdmin = false;
     }
 
-    static create({name, password, username}:UserRequest ) {
-        const user = new User(name, username, password);
+    static async create({name, password, username}:UserRequest ) {
+        if(!password) {
+            throw new Error("Username/ Password is required")
+        }
+        const bcrypt = new PasswordBcrypt()
+        const passwordHash = await bcrypt.hash(password)
+        const user = new User(name, username, passwordHash as string);
         return user;
     }
 }
