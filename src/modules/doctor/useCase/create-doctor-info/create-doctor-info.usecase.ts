@@ -5,8 +5,8 @@ import { DoctorInfoRepository } from "../../repository/doctor-info.repository"
 import { DoctorRepository } from "../../repository/doctor.repository"
 
 export type DoctorInfoRequest = {
-    startAt: string
-    endAt: string
+    start_at: string
+    end_at: string
     price: Prisma.Decimal
     duration: number
 }
@@ -22,10 +22,10 @@ export class CreateDoctorInfoUseCase {
 
         const doctorInfo = DoctorInfo.create({
             ...data,
-            doctorId: doctor.id
+            doctor_id: doctor.id
         })
 
-       const doctorCreated = await this.doctorInfoRepository.save(doctorInfo)
+       const doctorCreated = await this.doctorInfoRepository.saveOrUpdate(doctorInfo)
        return doctorCreated
     }
 }

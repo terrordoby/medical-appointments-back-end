@@ -9,12 +9,13 @@ datasource db {
 
 model User {
   id        String    @id @default(uuid())
-  name      String 
+  name      String
   username  String    @unique
   password  String
   isAdmin   Boolean   @default(false)
   createdAt DateTime  @default(now())
-  Doctor Doctor? 
+  Doctor Doctor?
+  patient Patient?
 
   @@map("users")
 }
@@ -52,4 +53,14 @@ model DoctorInfo {
   price Decimal
   doctor_id String @unique
   doctor Doctor @relation(fields: [doctor_id], references: [id])
+}
+
+model Patient {
+  id String @default(uuid())
+  email String @unique
+  document String @unique
+  user_id String @unique
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map("patients")
 }

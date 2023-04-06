@@ -4,9 +4,9 @@ import { Prisma } from '@prisma/client'
 export type DoctorInfoProps = {
     duration: number
     price: Prisma.Decimal
-    startAt: string
-    endAt: string
-    doctorId: string
+    start_at: string
+    end_at: string
+    doctor_id: string
 }
 
 export class DoctorInfo {
@@ -21,11 +21,11 @@ export class DoctorInfo {
         this.id = randomUUID()
         this.duration = data.duration
         this.price = data.price
-        this.start_at = data.startAt
-        this.end_at = data.endAt
-        this.doctor_id = data.doctorId
+        this.start_at = data.start_at
+        this.end_at = data.end_at
+        this.doctor_id = data.doctor_id
 
-        if (data.doctorId) {
+        if (!data.doctor_id) {
             throw new Error ("Doctor does no exists!")
         }
 
@@ -33,11 +33,11 @@ export class DoctorInfo {
             throw new Error("Invalid Duration")
         }
 
-        if (!validateTime(data.startAt) || !validateTime(data.endAt)) {
+        if (!validateTime(data.start_at) || !validateTime(data.end_at)) {
             throw new Error ("Invalid StartAt/ EndAt")
         }
 
-        if (!compareEndTimeIsAfter(data.startAt, data.endAt)) {
+        if (!compareEndTimeIsAfter(data.start_at, data.end_at)) {
             throw new Error ("End time cannot be earliner than start time")
         }
     }
