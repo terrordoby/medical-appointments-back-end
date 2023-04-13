@@ -19,3 +19,4 @@
 {"level":"error","message":"Parameter_Required_Error: Username is already\n    at CreateUserCase.<anonymous> (C:\\Users\\gabri\\Documents\\Projects\\Sistema Agendamento back-end\\src\\modules\\users\\useCases\\create-user.ts\\create-user.usercase.ts:26:19)\n    at Generator.next (<anonymous>)\n    at fulfilled (C:\\Users\\gabri\\Documents\\Projects\\Sistema Agendamento back-end\\src\\modules\\users\\useCases\\create-user.ts\\create-user.usercase.ts:5:58)","timestamp":"28/03/2023 17:20:20"}
 {"level":"info","message":"Usu�rio sendo criado","timestamp":"28/03/2023 17:21:22"}
 {"level":"info","message":"Usu�rio sendo criado","timestamp":"29/03/2023 23:05:18"}
+{"level":"info","message":"Usu�rio sendo criado","timestamp":"11/04/2023 13:12:53"}

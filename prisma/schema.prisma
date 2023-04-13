@@ -39,16 +39,16 @@ model Doctor {
   user User @relation(fields: [user_id],references: [id])
   user_id String @unique
   speciality Specialist @relation(fields: [speciality_id], references: [id])
-  speciality_id String
+  speciality_id String @unique
   doctorInfo DoctorInfo?
+  doctorSchedule DoctorSchedule[]
+  appointments Appointments?
 
   @@map("doctors")
 }
 
 model DoctorInfo {
   id String @id @default(uuid())
-  start_at String
-  end_at String
   duration Int
   price Decimal
   doctor_id String @unique
@@ -56,11 +56,36 @@ model DoctorInfo {
 }
 
 model Patient {
-  id String @default(uuid())
+  id String @id @default(uuid())
   email String @unique
   document String @unique
   user_id String @unique
   user User @relation(fields: [user_id], references: [id])
+  appointments Appointments?
 
   @@map("patients")
+}
+
+model DoctorSchedule {
+  id String @id @default(uuid())
+  start_at String
+  end_at String
+  day_of_week Int
+  doctor_id String
+  doctor Doctor @relation(fields: [doctor_id], references: [id])
+
+  @@map("doctor_schedules")
+}
+
+
+model Appointments {
+  id String @id @default(uuid())
+  doctor_id String @unique
+  Doctor Doctor @relation(fields: [doctor_id], references: [id])
+  patient_id String @unique
+  Patient Patient @relation(fields: [patient_id], references: [id])
+  is_finshed Boolean @default(false)
+  date DateTime
+  note String
+
 }

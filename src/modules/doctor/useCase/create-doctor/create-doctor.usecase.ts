@@ -10,7 +10,7 @@ type DoctorRequest = {
     password: string;
     email: string;
     crm: string;
-    specialisty_id: string;
+    speciality_id: string;
 }
 
 export class CreateDoctorUseCase {
@@ -21,27 +21,29 @@ export class CreateDoctorUseCase {
             password: props.password,
             username: props.username
         })
-        const speciality = await this.specialistyRepository.finById(props.specialisty_id)
-        
+        const speciality = await this.specialistyRepository.finById(props.speciality_id)
+
         if(!speciality) {
             throw new Error("Specialisy is not exists")
         }
-        
+
         const user = await this.userRepository.findUsername(props.username)
 
         if (user) {
             throw new Error("Username is already exists")
         }
 
-       
+
         const userCreated = await this.userRepository.save(userDoctor);
 
         const doctor = Doctor.create({
             crm: props.crm,
             email: props.email,
-            speciality_id: props.specialisty_id,
+            speciality_id: props.speciality_id,
             user_id: userCreated.id
         })
+
+
 
         const crmExists = await this.doctorRepository.findByCrm(props.crm)
 
@@ -50,6 +52,8 @@ export class CreateDoctorUseCase {
         }
 
         const doctorCreated = await this.doctorRepository.save(doctor)
+
+        console.log(doctorCreated)
 
         return doctorCreated
     }

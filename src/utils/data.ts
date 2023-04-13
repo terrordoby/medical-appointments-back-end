@@ -13,3 +13,11 @@ export function formatDateHour(time: string) {
 export function compareEndTimeIsAfter(startTime: string, endTime: string) {
   return formatDateHour(endTime).isAfter(formatDateHour(startTime))
 }
+
+export function getDayOfWeek(date: Date) {
+  return dayjs(date).day()
+}
+
+export function fomartDate(date: Date, format: string) {
+  return dayjs(date).format(format)
+}

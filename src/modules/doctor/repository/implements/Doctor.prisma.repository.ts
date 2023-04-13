@@ -4,9 +4,9 @@ import { DoctorMapper } from "../../mapper/create-doctor.map";
 import { DoctorRepository } from "../doctor.repository";
 
 export class DoctorPrismaRepository implements DoctorRepository {
-    
+
     async save(data: any): Promise<any> {
-        await prismaClient.doctor.create({
+       const doctor = await prismaClient.doctor.create({
             data: {
                 crm: data.crm,
                 email: data.email,
@@ -15,7 +15,7 @@ export class DoctorPrismaRepository implements DoctorRepository {
             }
         })
 
-        return DoctorMapper.createDoctorMapper(data)
+        return doctor
     }
 
     async findByCrm(crm: string): Promise<Doctor | null> {
@@ -36,5 +36,5 @@ export class DoctorPrismaRepository implements DoctorRepository {
             }
         })
     }
-    
+
 }

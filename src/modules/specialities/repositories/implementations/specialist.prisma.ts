@@ -24,6 +24,7 @@ export class RepositorySpecialistPrisma implements ISpecialistRepository {
     }
 
     async finById(specialistyId: string): Promise<Specialist | null> {
+      console.log(specialistyId)
         return prismaClient.specialist.findUnique({
             where: {
                 id: specialistyId
